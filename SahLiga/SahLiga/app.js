@@ -51,7 +51,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const externalUrl = "not_used";
+const externalUrl = undefined; // not used
 const port = 4092;
 if (externalUrl) {
   const hostname = "127.0.0.1";

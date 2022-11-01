@@ -80,7 +80,7 @@ app.use(function(err, req, res, next) {
 });
 
     
-const externalUrl = "not_used";
+const externalUrl = undefined; // not used
 const port =  4091;
 const hostname = '127.0.0.1';
 if (externalUrl) {
@@ -90,7 +90,7 @@ if (externalUrl) {
     
 } else {
     app.listen(port, hostname, () => {
-        console.log(`Web API running at http://${hostname}:${port}/`);
+        console.log(`Web API running at http://localhost:${port}/`);
     });
     
 }
