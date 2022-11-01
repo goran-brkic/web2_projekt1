@@ -6,7 +6,7 @@ const pool = new Pool({
     host: 'dpg-cdfg5lda4992md4hl9jg-a.frankfurt-postgres.render.com',
     port: 5432,
     database: 'sahliga',
-    ssl: false
+    ssl: true
 });
 
 module.exports = pool;
