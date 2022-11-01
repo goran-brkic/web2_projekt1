@@ -30,7 +30,7 @@ app.use('/users', usersRouter);
 app.get("/auth_config.json", function (req, res) {
   res.json({
       "domain": "https://dev-7xjdvaspwt881ruz.eu.auth0.com",
-      "clientId": process.env.SPA_CLIENT_ID,
+      "clientId": '1fUuY0YgNda7RVEvR3S263osBXWvu2o1',
       "audience": 'https://sahliga.com'
   });
 });
@@ -51,13 +51,21 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var port = 4092;
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-}, app)
-    .listen(port, function () {
-    console.log("SPA running at https://localhost:".concat(port, "/"));
-});
+const externalUrl = "not_used";
+const port = 4092;
+if (externalUrl) {
+  const hostname = "127.0.0.1";
+  app.listen(port, hostname, () => {
+    console.log(`Server locally running at http://${hostname}:${port} and from outside on ${externalUrl}`);
+  });
+} else {
+  https.createServer({
+      key: fs.readFileSync('./server.key'),
+      cert: fs.readFileSync('./server.cert')
+  }, app)
+      .listen(port, function () {
+      console.log(`SPA running at https://localhost:${port}/`);
+  });
+}
 
 module.exports = app;

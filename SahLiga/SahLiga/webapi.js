@@ -34,11 +34,12 @@ const permissionsMiddleware = (req, res, next) => {
 
 const checkJwt = auth({
     audience: 'https://sahliga.com',
-    issuerBaseURL: `${authServer}`
+    issuerBaseURL: `${authServer}`,
+    tokenSigningAlg: "RS256"
 });
 
 
-// app.use(checkJwt);
+app.use(checkJwt);
 
 app.get('/api/member', checkJwt, permissionsMiddleware, checkMemberPermissions, async (req, res) => {
     const accesstoken = req.auth.token;
@@ -78,9 +79,18 @@ app.use(function(err, req, res, next) {
     next(err, req, res);
 });
 
-
+    
+const externalUrl = "not_used";
+const port =  4091;
 const hostname = '127.0.0.1';
-const port = 4091; 
-app.listen(port, hostname, () => {
-  console.log(`Web API running at http://${hostname}:${port}/`);
-});
+if (externalUrl) {
+    app.listen(port, hostname, () => {
+        console.log(`Web API locally running at http://${hostname}:${port} and from outside on ${externalUrl}:4091`);
+    });
+    
+} else {
+    app.listen(port, hostname, () => {
+        console.log(`Web API running at http://${hostname}:${port}/`);
+    });
+    
+}
