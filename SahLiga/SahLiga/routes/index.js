@@ -10,7 +10,7 @@ router.get('/', async function(req, res, next) {
 router.get("/auth_config.json", function (req, res) {
   res.json({
       "domain": "https://dev-7xjdvaspwt881ruz.eu.auth0.com",
-      "clientId": process.env.SPA_CLIENT_ID,
+      "clientId": '1fUuY0YgNda7RVEvR3S263osBXWvu2o1',
       "audience": 'https://sahliga.com'
   });
 });
