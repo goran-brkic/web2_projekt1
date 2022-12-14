@@ -3,8 +3,11 @@ const cors = require('cors');
 const { auth } = require("express-oauth2-jwt-bearer");
 const jwtAuthz = require('express-jwt-authz'); // not used, auth0 trial
 const axios = require('axios');
+var bodyParser = require('body-parser')
 
 
+const externalUrl = process.env.RENDER_EXTERNAL_URL;
+const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4091;
 
 const app = express();
 app.use(cors());
@@ -78,19 +81,16 @@ app.use(function(err, req, res, next) {
   
     next(err, req, res);
 });
+    
 
-    
-const externalUrl = undefined; // not used
-const port =  4091;
-const hostname = '127.0.0.1';
+const hostname = 'localhost';
 if (externalUrl) {
-    app.listen(port, hostname, () => {
-        console.log(`Web API locally running at http://${hostname}:${port} and from outside on ${externalUrl}:4091`);
-    });
-    
+  app.listen(port, hostname, () => {
+    console.log(`Server locally running at http://${hostname}:${port} and from outside on ${externalUrl}:${port}`);
+  });
 } else {
     app.listen(port, hostname, () => {
-        console.log(`Web API running at http://localhost:${port}/`);
+        console.log(`Web API running at http://${hostname}:${port}/`);
     });
     
 }

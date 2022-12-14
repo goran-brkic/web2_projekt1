@@ -6,11 +6,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv');
+var bodyParser = require('body-parser')
 
 dotenv.config();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -25,15 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-app.get("/auth_config.json", function (req, res) {
-  res.json({
-      "domain": "https://dev-7xjdvaspwt881ruz.eu.auth0.com",
-      "clientId": '1fUuY0YgNda7RVEvR3S263osBXWvu2o1',
-      "audience": 'https://sahliga.com'
-  });
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,10 +42,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const externalUrl = undefined; // not used
-const port = 4092;
+const externalUrl = process.env.RENDER_EXTERNAL_URL;
+const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4092;
 if (externalUrl) {
-  const hostname = "127.0.0.1";
+  const hostname = "localhost";
   app.listen(port, hostname, () => {
     console.log(`Server locally running at http://${hostname}:${port} and from outside on ${externalUrl}`);
   });
