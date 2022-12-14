@@ -12,7 +12,7 @@ const configureClient = async () => {
     });
 };
 
-const serverUri = "http://127.0.0.1:4091";
+const serverUri = "https://testingrender-backend.onrender.com";
 
 
 const initialLogin = async () => {
@@ -113,7 +113,7 @@ const showAdminOptions = async () => {
   try {    
     console.log("adminOptions");
     // Get the access token from the Auth0 client
-    const token = await auth0.getTokenSilently();   
+    const token = await auth0.getTokenSilently();
 
     // Make the call to the API, setting the token
     // in the Authorization header
@@ -122,9 +122,15 @@ const showAdminOptions = async () => {
         Authorization: `Bearer ${token}`
       }
     });
-  
-    // Fetch the JSON result
-    const responseData = await response.json();
+    
+	var responseData = undefined;
+	try {
+		// Fetch the JSON result
+		responseData = await response.json();
+	}
+	catch (error) {
+		console.log('Error parsing JSON:', error, response);
+	}
 
     if(responseData){
       // user is authorized - admin
@@ -210,6 +216,7 @@ window.onload = async () => {
     document.getElementById('btnLogin').addEventListener("click", login);
 
     await configureClient();
+	console.log(auth0)
     await initialLogin();
 
     const isAuthenticated = await auth0.isAuthenticated();
@@ -274,7 +281,6 @@ window.onload = async () => {
       modal.style.display = "none";
     }
   } */
-
 
 
 
