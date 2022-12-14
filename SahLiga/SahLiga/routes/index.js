@@ -11,7 +11,7 @@ router.get("/auth_config.json", function (req, res) {
   res.json({
       "domain": "https://dev-7xjdvaspwt881ruz.eu.auth0.com",
       "clientId": '1fUuY0YgNda7RVEvR3S263osBXWvu2o1',
-      "audience": 'https://sahliga.com'
+      "audience": 'https://sahliga.com',
   });
 });
 
